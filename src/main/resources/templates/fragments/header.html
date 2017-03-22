@@ -12,12 +12,14 @@
                             class="icon-bar"></span> <span class="icon-bar"></span> <span
                             class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#" th:href="@{/}">Spring Boot</a>
+                    <a class="navbar-brand" href="#" th:href="@{/}">XER User Portal</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li th:class="${activePage == 'home'}? 'active' : ''"><a href="#" th:href="@{/}">Home</a></li>
                         <li th:class="${activePage} == 'contacts'? 'active' : ''"><a href="#" th:href="@{/contacts}">Contacts</a></li>
+                        <li th:class="${activePage} == 'sites'? 'active' : ''"><a href="#" th:href="@{/sites}">Sites</a></li>
+                        <li th:class="${activePage} == 'reports'? 'active' : ''"><a href="#" th:href="@{/reports}">Physicians</a></li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->

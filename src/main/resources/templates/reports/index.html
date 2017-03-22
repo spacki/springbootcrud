@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacts - CRUD in Spring Boot with Spring Data JPA</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: body"></th:block> /*/-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Reporting Physicians <a th:href="@{/reports/add}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Id</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Home Domain</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:if="!${#lists.isEmpty(reportingPhysicians)}">
+                        <tr th:each = "physician : ${reportingPhysicians}">
+                            <td th:text = "${physician.id}"></td>
+                            <td th:text = "${physician.userId}"></td>
+                            <td th:text = "${physician.lastName}"></td>
+                            <td th:text = "${physician.firstName}"></td>
+                            <td th:text = "${physician.homeDomain}"></td>
+                            <td th:text = "${physician.activeStatus}"></td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a th:href="${'/reports/view/' + physician.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="user details"></span></a>
+                                    <a th:href="${'/reports/edit/' + physician.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true" title="edit user"></span></a>
+                                    <a th:href="${'/reports/delete/' + physician.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true" title="delete user"></span></a>
+                                    <a th:href="${'/reports/link/' + physician.id}" class="btn btn-danger"><span class="glyphicon glyphicon-link" aria-hidden="true" title="map user to other sites"></span></a>
+
+
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    <div th:if="${#lists.isEmpty(reportingPhysicians)}">
+                        <tr>
+                            <td>No Physician exists!</td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/*/ <th:block th:include="fragments/js :: body"></th:block> /*/-->
+<script src="../static/js/app.js" th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 testimages/
+target/
 log
 logs
 .gradle

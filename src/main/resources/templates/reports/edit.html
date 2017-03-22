@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporting Physician - CRUD in Spring Boot with Spring Data JPA</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: body"></th:block> /*/-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <!--<div class="container">-->
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Edit Contact</div>
+                <div class="panel-body">
+                    <form th:action="@{/reports/update}" th:object="${report}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="hidden" th:field="*{userId}" />
+                        <input type="hidden" th:field="*{homeDomain}" />
+                        <!--input type="hidden" th:field="*{created}" />
+                        <input type="hidden" th:field="*{lastSynchronized}" /-->
+                        <!--
+                        <div class="form-group">
+                            <label for="inputId">ID</label>
+                            <input type="text" class="form-control" id="inputId" placeholder="ID" th:field="*{id}" disabled="disabled" />
+                        </div>
+                        -->
+                        <div class="form-group">
+                            <label for="inputUserId">User ID</label>
+                            <input type="text" class="form-control" id="inputUserId" placeholder="userId" th:field="*{userId}" disabled="disabled" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputHomeDomain">Home Domain</label>
+                            <input type="text" class="form-control" id="inputhomeDomain" placeholder="homeDomain" th:field="*{homeDomain}" disabled="disabled" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLastName">Last Name</label>
+                            <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" th:field="*{lastName}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstName">First Name</label>
+                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" th:field="*{firstName}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email" th:field="*{email}" name="email"  />
+                        </div>
+                        <div class="form-group">
+                            <label for="activeStatus">Active Status</label>
+                            <input type="checkbox" class="form-control" id="activeStatus" placeholder="acitive" th:field="*{activeStatus}" name="activeStatus"  />
+                        </div>
+                        <div class="text-right">
+                            <a href="/reports" th:href="@{/reports}" class="btn btn-default">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<!--/*/ <th:block th:include="fragments/js :: body"></th:block> /*/-->
+<script src="../static/js/app.js" th:src="@{/js/app.js}"></script>
+</body>
+</html>
