@@ -1,8 +1,6 @@
 package com.ge.hc.emrad.xer.controller;
 
-import com.ge.hc.emrad.xer.domain.Contact;
 import com.ge.hc.emrad.xer.domain.Site;
-import com.ge.hc.emrad.xer.repository.SiteRepository;
 import com.ge.hc.emrad.xer.service.SiteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
