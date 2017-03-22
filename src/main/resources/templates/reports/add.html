@@ -16,7 +16,30 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading">Add Reporting Physician</div>
                 <div class="panel-body">
-                    <form action="/reprots/add" th:action="@{/contacts/add}" th:object="${reportingPhysician}" method="post">
+                    <form action="/reprots/add" th:action="@{/reports/add}" th:object="${reportingPhysician}" method="post">
+                        <div class="form-group">
+                            <label for="inputUserId">User Id</label>
+                            <input type="text" class="form-control" id="inputUserId" placeholder="User id" th:field="*{userId}" name="userId" />
+                            <span  class="help-block" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">User Id Error</span>
+                        </div>
+                        <!--div class="form-group">
+                            <label for="inputHomeDomain">Home Domain</label>
+                            <input type="dropdown" class="form-control" id="inputHomeDomain" placeholder="HomeDomain" th:field="*{homeDomain}" name="homeDomain" />
+                            <span  class="help-block" th:if="${#fields.hasErrors('homeDomain')}" th:errors="*{homeDomain}">Home Domain Error</span>
+                        </div-->
+
+                        <!--div class="form-group">
+                            <label  for="inputHomeDomain">Company</label>
+                            <select class="form-control" path="site" />
+
+                        </div-->
+
+                        <div class="form-group">
+                            <label>HomeDomain</label>
+                                  <select class="form-control" th:field="*{homeDomain}" name="homeDomain" >
+                                      <option th:each="p : ${sites}" th:value="${p.name}" th:text="${p.city}"></option>
+                                </select>
+                        </div>
                         <div class="form-group">
                             <label for="inputLastName">Last Name</label>
                             <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" th:field="*{lastName}" name="lastName" />
@@ -27,12 +50,23 @@
                             <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" th:field="*{firstName}" name="firstName" />
                             <span  class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
                         </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email</label>
+                            <input type="text" class="form-control" id="inputEmail" placeholder="eMail" th:field="*{email}" name="email" />
+                            <span  class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="activeStatus">Active Status</label>
+                            <input type="checkbox" class="form-control" id="activeStatus" placeholder="acitive" th:field="*{activeStatus}" name="activeStatus"  />
+                        </div>
+
                         <div class="text-right">
                             <a href="/reports" th:href="@{/reports}" class="btn btn-default">Cancel</a>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
+
                 <div class="panel-footer">
                 </div>
             </div>
