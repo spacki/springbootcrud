@@ -22,22 +22,10 @@
                             <input type="text" class="form-control" id="inputUserId" placeholder="User id" th:field="*{userId}" name="userId" />
                             <span  class="help-block" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">User Id Error</span>
                         </div>
-                        <!--div class="form-group">
-                            <label for="inputHomeDomain">Home Domain</label>
-                            <input type="dropdown" class="form-control" id="inputHomeDomain" placeholder="HomeDomain" th:field="*{homeDomain}" name="homeDomain" />
-                            <span  class="help-block" th:if="${#fields.hasErrors('homeDomain')}" th:errors="*{homeDomain}">Home Domain Error</span>
-                        </div-->
-
-                        <!--div class="form-group">
-                            <label  for="inputHomeDomain">Company</label>
-                            <select class="form-control" path="site" />
-
-                        </div-->
-
                         <div class="form-group">
-                            <label>HomeDomain</label>
+                            <label>Home Trust</label>
                                   <select class="form-control" th:field="*{homeDomain}" name="homeDomain" >
-                                      <option th:each="p : ${sites}" th:value="${p.name}" th:text="${p.city}"></option>
+                                      <option th:each="site : ${sites}" th:value="${site.name}" th:text="${site.city}"></option>
                                 </select>
                         </div>
                         <div class="form-group">
