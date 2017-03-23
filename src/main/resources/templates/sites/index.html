@@ -13,7 +13,7 @@
         <div class="col-sm-10 col-sm-offset-1">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">Sites <a th:href="@{/sites/add}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></div>
+                <div class="panel-heading">Sites <a th:href="@{/sites/add}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true" title="create a new trust"></span></a></div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -32,9 +32,9 @@
 
                             <td>
                                 <div class="btn-group" role="group" aria-label="...">
-                                    <a th:href="${'/sites/view/' + site.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                    <a th:href="${'/sites/edit/' + site.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    <a th:href="${'/sites/delete/' + site.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                    <a th:href="${'/sites/view/' + site.id}" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="show trust details"></span></a>
+                                    <a th:href="${'/sites/edit/' + site.id}" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true" title="edit trust"></span></a>
+                                    <a th:href="${'/sites/delete/' + site.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true" title=""delete trust"></span></a>
                                 </div>
                             </td>
                         </tr>
