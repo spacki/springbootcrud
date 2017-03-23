@@ -8,8 +8,8 @@
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>CRUD in Spring Boot with Spring Data JPA</name>
-	<description>CRUD in Spring Boot with Spring Data JPA</description>
+	<name>Emrad-XER-User-Portal</name>
+	<description>EMRAD XER USER Portal</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

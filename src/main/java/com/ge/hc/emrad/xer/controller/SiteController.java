@@ -1,6 +1,8 @@
 package com.ge.hc.emrad.xer.controller;
 
+import com.ge.hc.emrad.xer.domain.ReportingPhysician;
 import com.ge.hc.emrad.xer.domain.Site;
+import com.ge.hc.emrad.xer.service.ReportingPhysicianService;
 import com.ge.hc.emrad.xer.service.SiteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by karstenspakowski on 21/03/17.
@@ -29,6 +33,13 @@ public class SiteController {
     @Autowired
     public void setSiteService(SiteService siteService) {
         this.siteService = siteService;
+    }
+
+    private ReportingPhysicianService reportingPhysicianService;
+
+    @Autowired
+    public void setReportingPhysicianService(ReportingPhysicianService reportingPhysicianService) {
+        this.reportingPhysicianService = reportingPhysicianService;
     }
 
     @RequestMapping(value = { "", "/" })
@@ -81,7 +92,17 @@ public class SiteController {
     public String deleteSite(@PathVariable Integer id) {
         /* TODO delete sites only, if all users which are belonging tothat site are removed as well !!
         * */
-        log.warn(" delete Site : " + siteService.getSiteById(id));
+        Site site = siteService.getSiteById(id);
+        log.warn(" delete Site : " + site);
+        log.warn("deactivate reporting physician from site " + site.getCity() + " : " + site.getName());
+
+        List<ReportingPhysician> reportingPhysicianList = reportingPhysicianService.getAllReportingPysicanFromSite(site.getName());
+        for (ReportingPhysician reportingPhysician : reportingPhysicianList) {
+            log.warn("change active status for reporting physician " + reportingPhysician.getUserId());
+            reportingPhysician.setActiveStatus(false);
+            reportingPhysician.setLastSynchronized(new Date());
+            reportingPhysicianService.saveReportingPhysician(reportingPhysician);
+        }
         this.siteService.deleteSite(id);
         return "redirect:/sites";
     }

@@ -5,6 +5,8 @@ import com.ge.hc.emrad.xer.repository.ReportingPhysicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by karstenspakowski on 21/03/17.
  */
@@ -37,5 +39,10 @@ public class ReportingPhysicianServiceImpl implements ReportingPhysicianService 
     public void deleteReportingPhysician(Integer id) {
         reportingPhysicianRepository.delete(id);
 
+    }
+
+    @Override
+    public List<ReportingPhysician> getAllReportingPysicanFromSite(String name) {
+        return reportingPhysicianRepository.findAllReportingPhysicianbySite(name);
     }
 }
