@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label for="inputUserId">User Id</label>
                             <input type="text" class="form-control" id="inputUserId" placeholder="User id" th:field="*{userId}" name="userId" />
-                            <span  class="help-block" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">User Id Error</span>
+                            <span  class="error text-danger" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">User Id Error</span>
                         </div>
                         <div class="form-group">
                             <label>Home Trust</label>
@@ -31,17 +31,17 @@
                         <div class="form-group">
                             <label for="inputLastName">Last Name</label>
                             <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" th:field="*{lastName}" name="lastName" />
-                            <span  class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+                            <span  class="error text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
                         </div>
                         <div class="form-group">
                             <label for="inputFirstName">First Name</label>
                             <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" th:field="*{firstName}" name="firstName" />
-                            <span  class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+                            <span  class="error text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email</label>
                             <input type="text" class="form-control" id="inputEmail" placeholder="eMail" th:field="*{email}" name="email" />
-                            <span  class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</span>
+                            <span  class="error text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</span>
                         </div>
                         <div class="form-group">
                             <label for="activeStatus">Active Status</label>

@@ -1,11 +1,16 @@
 package com.ge.hc.emrad.xer.domain;
 
+import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Created by karstenspakowski on 21/03/17.
@@ -23,6 +28,15 @@ public class Site {
     @NotEmpty(message = "city is required.")
     private String city;
 
+
+    @NotNull
+    @Pattern(regexp="^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+    private String imsAddress;
+
+
+    @Min(9000)
+    @Max(10000)
+    private int webservicePort;
 
     public Integer getId() {
         return id;
@@ -46,6 +60,22 @@ public class Site {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getWebservicePort() {
+        return webservicePort;
+    }
+
+    public void setWebservicePort(int webservicePort) {
+        this.webservicePort = webservicePort;
+    }
+
+    public String getImsAddress() {
+        return imsAddress;
+    }
+
+    public void setImsAddress(String imsAddress) {
+        this.imsAddress = imsAddress;
     }
 
     public Site() {

@@ -82,10 +82,16 @@ public class SiteController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateSite(Site site) {
+    public String updateSite(Site site, BindingResult bindingResult, Model model) {
         log.debug("Site ID: " + site.getId());
-        this.siteService.saveSite(site);
-        return "redirect:/sites/view/" + site.getId();
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("activePage", "sites");
+            return "sites/edit";
+        } else {
+            this.siteService.saveSite(site);
+            return "redirect:/sites/view/" + site.getId();
+        }
+
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

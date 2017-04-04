@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>EMRAD - XER-User-Portal</title>
+        <title>EMRAD XER Multi-CPACS User Sync Tool</title>
         <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     </head>
     <body>
         <!--/*/ <th:block th:include="fragments/header :: body"></th:block> /*/-->
         <div class="container">
             <div class="starter-template">
-                <h1>EMRAD XER </h1>
+                <h1>EMRAD XER Multi-CPACS User Sync Tool</h1>
                 <p>
-                    <a href="/sites" class="btn btn-primary btn-lg">Sites</a>
+                    <!--a href="sites" class="btn btn-primary btn-lg">Sites</a-->
+                    <a href="#" class="btn btn-primary btn-lg" th:href="@{/sites}">Sites</a>
                 </p>
                 <p>
-                    <a href="/reports" class="btn btn-primary btn-lg">Physicians</a>
+                    <!--a href="reports" class="btn btn-primary btn-lg">Physicians</a-->
+                    <a href="#" class="btn btn-primary btn-lg" th:href="@{/reports}">Physicians</a>
                 </p>
             </div>
         </div>

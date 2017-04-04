@@ -1,17 +1,23 @@
 package com.ge.hc.emrad.xer.controller;
 
+import com.ge.hc.emrad.xer.domain.CpacsUser;
 import com.ge.hc.emrad.xer.domain.ReportingPhysician;
 import com.ge.hc.emrad.xer.domain.Site;
+import com.ge.hc.emrad.xer.service.GreetingClient;
 import com.ge.hc.emrad.xer.service.ReportingPhysicianService;
 import com.ge.hc.emrad.xer.service.SiteService;
+import greetings.wsdl.GetGreetingResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -28,6 +34,7 @@ public class ReportingPhysicianController {
     private Logger log = Logger.getLogger(ReportingPhysicianController.class);
 
     private ReportingPhysicianService reportingPhysicianService;
+    private ObjectError error;
 
     @Autowired
     public void setReportingPhysicianService(ReportingPhysicianService reportingPhysicianService) {
@@ -39,6 +46,13 @@ public class ReportingPhysicianController {
     @Autowired
     public void setSiteService(SiteService siteService) {
         this.siteService = siteService;
+    }
+
+    private GreetingClient greetingClient;
+
+    @Autowired
+    public void setGreetingClient(GreetingClient greetingClient) {
+        this.greetingClient = greetingClient;
     }
 
     @RequestMapping(value = { "", "/" })
@@ -67,10 +81,36 @@ public class ReportingPhysicianController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addSite(@Valid ReportingPhysician reportingPhysician, BindingResult bindingResult, Model model) {
-        log.debug("add (post) new reporting physician");
+        log.info("add (post) new reporting physician");
+        // first we needd to check if the user exists on the selected site
+
+
+        /* SOPA Pacs service simulator */
+
+        /*
+        GetGreetingResponse response = greetingClient.getGreeting("Karsten");
+        greetingClient.logResponse(response);
+        */
+
         if (bindingResult.hasErrors()) {
             log.debug("some errors ");
+            model.addAttribute("sites", this.siteService.getAllSites());
             model.addAttribute("activePage", "reports");
+            return "reports/add";
+        }
+        /* now we must make sure the user is know on the hoem trust */
+
+         RestTemplate restTemplate = new RestTemplate();
+         log.info("make sure that a user exists: " + reportingPhysician.getUserId());
+
+        String url = "http://localhost:9100/hello-cpacs/?name=" + reportingPhysician.getUserId();
+        CpacsUser user = restTemplate.getForObject(
+                url, CpacsUser.class);
+        log.info("user: " + user);
+
+        if (user == null) {
+            FieldError fieldError = new FieldError("reportingPhysician", "userId", "the user does not exist on the local trust!, Please create the user on AD of the local trust!");
+            bindingResult.addError(fieldError);
             return "reports/add";
         }
         reportingPhysician.setLastSynchronized(new Date());
