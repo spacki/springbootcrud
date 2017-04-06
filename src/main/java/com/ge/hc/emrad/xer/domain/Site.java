@@ -3,14 +3,12 @@ package com.ge.hc.emrad.xer.domain;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 /**
  * Created by karstenspakowski on 21/03/17.
@@ -22,8 +20,14 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @ManyToMany(mappedBy="sites", fetch = FetchType.EAGER)
+    private Collection<ReportingPhysician> reportingPhysicians;
+
     @NotEmpty(message = "name is required.")
     private String name;
+
+    @NotEmpty
+    private String userGroup;
 
     @NotEmpty(message = "city is required.")
     private String city;
@@ -62,6 +66,10 @@ public class Site {
         this.city = city;
     }
 
+    public String getUserGroup() { return userGroup; }
+
+    public void setUserGroup(String userGroup) { this.userGroup = userGroup; }
+
     public int getWebservicePort() {
         return webservicePort;
     }
@@ -86,12 +94,30 @@ public class Site {
         this.city = city;
     }
 
+    public Collection<ReportingPhysician> getReportingPhysician() {
+        return reportingPhysicians;
+    }
+
+    public void addReportingPhysician(ReportingPhysician reportingPhysician) {
+        if (!getReportingPhysician().contains(reportingPhysician)) {
+            getReportingPhysician().add(reportingPhysician);
+        }
+        if (!reportingPhysician.getSites().contains(this)) {
+            reportingPhysician.getSites().add(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Site{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
+                 ", userGroup='" + userGroup + '\'' +
+                ", imsAddress='" + imsAddress + '\'' +
+                ", webservicePort=" + webservicePort +
+                ", number of mapped users=" + this.getReportingPhysician().size() +
                 '}';
     }
+
 }

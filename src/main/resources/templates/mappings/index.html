@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EMRAD - XER-User-Portal</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: body"></th:block> /*/-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+
+                <div> <h2 th:text="${'Mappings for User: ' + physician.userId}" class="panel-heading"> </h2></div>
+                <div  class="panel-heading">Add Mapping:
+                    <a th:href="${'/mappings/add/' + physician.id}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true" title="create a new mapping for XER user"></span></a>
+                    </div>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:if="!${#lists.isEmpty(sites)}">
+                        <tr th:each = "site : ${sites}">
+                            <td th:text = "${physician.userId}"></td>
+                            <td th:text = "${site.name}"></td>
+                            <td th:text = "${site.city}"></td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a th:href="${'/mappings/delete/userId/' + physician.id + '/siteId/' + site.id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true" title="delete user"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    <div th:if="${#lists.isEmpty(sites)}">
+                        <tr>
+                            <td th:text="${'no mapping exist for user: ' + physician.userId}"></td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/*/ <th:block th:include="fragments/js :: body"></th:block> /*/-->
+<script src="../static/js/app.js" th:src="@{/js/app.js}"></script>
+</body>
+</html>

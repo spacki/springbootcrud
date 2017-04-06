@@ -5,6 +5,8 @@ import com.ge.hc.emrad.xer.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by karstenspakowski on 21/03/17.
  */
@@ -36,5 +38,15 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public void deleteSite(Integer id) {
         siteRepository.delete(id);
+    }
+
+    @Override
+    public Site getStiteByName(String name) {
+        return siteRepository.findSitebyName(name);
+    }
+
+    @Override
+    public List<Site> findAllSites() {
+        return siteRepository.findAllSites();
     }
 }

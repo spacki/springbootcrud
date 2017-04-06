@@ -102,15 +102,14 @@ public class SiteController {
         log.warn(" delete Site : " + site);
         log.warn("deactivate reporting physician from site " + site.getCity() + " : " + site.getName());
 
-        List<ReportingPhysician> reportingPhysicianList = reportingPhysicianService.getAllReportingPysicanFromSite(site.getName());
-        for (ReportingPhysician reportingPhysician : reportingPhysicianList) {
-            log.warn("change active status for reporting physician " + reportingPhysician.getUserId());
-            reportingPhysician.setActiveStatus(false);
-            reportingPhysician.setLastSynchronized(new Date());
-            reportingPhysicianService.saveReportingPhysician(reportingPhysician);
+        if (site.getReportingPhysician().isEmpty()) {
+            this.siteService.deleteSite(id);
+
+        } else {
+            log.warn("can not delete site since a mapping still exist");
         }
-        this.siteService.deleteSite(id);
         return "redirect:/sites";
+
     }
 
 }

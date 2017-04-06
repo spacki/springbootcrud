@@ -12,6 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 /**
@@ -43,7 +44,8 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
 
         loadSites();
         loadReportingPhysicians();
-        readCpacsUserRestService("WEB");
+        loadMappings();
+      //  readCpacsUserRestService("WEB");
     }
 
 
@@ -159,6 +161,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site1 = new Site();
         site1.setName("NHU");
         site1.setCity("Nottingham");
+        site1.setUserGroup("Radiologist");
         site1.setWebservicePort(9100);
         site1.setImsAddress("192.168.178.31");
 
@@ -168,6 +171,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site2 = new Site();
         site2.setName("CRH");
         site2.setCity("Chesterfield");
+        site2.setUserGroup("Radiologist");
         site2.setWebservicePort(9200);
         site2.setImsAddress("192.168.178.32");
 
@@ -177,6 +181,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site3 = new Site();
         site3.setName("SFH");
         site3.setCity("Sherwood");
+        site3.setUserGroup("Radiologist");
         site3.setWebservicePort(9300);
         site3.setImsAddress("192.168.178.33");
 
@@ -186,6 +191,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site4 = new Site();
         site4.setName("ULH");
         site4.setCity("Lincoln");
+        site4.setUserGroup("Radiologist");
         site4.setWebservicePort(9400);
         site4.setImsAddress("192.168.178.34");
 
@@ -195,6 +201,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site5 = new Site();
         site5.setName("UHL");
         site5.setCity("Leicester");
+        site5.setUserGroup("Radiologist");
         site5.setWebservicePort(9500);
         site5.setImsAddress("192.168.178.35");
 
@@ -204,6 +211,7 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site6 = new Site();
         site6.setName("NGH");
         site6.setCity("Northhampton");
+        site6.setUserGroup("Radiologist");
         site6.setWebservicePort(9600);
         site6.setImsAddress("192.168.178.36");
 
@@ -213,11 +221,33 @@ public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> 
         Site site7 = new Site();
         site7.setName("KGH");
         site7.setCity("Kettering");
+        site7.setUserGroup("Radiologist");
         site7.setWebservicePort(9700);
         site7.setImsAddress("192.168.178.37");
 
         siteService.saveSite(site7);
         log.info("Saved site - id: " + site7.getId());
+
+    }
+
+    @Transactional
+    public void loadMappings() {
+        ReportingPhysician physician = reportingPhysicianService.getReportingPhysicianById(1);
+        Site site = siteService.getSiteById(3);
+        physician.addSite(site);
+        site.addReportingPhysician(physician);
+        siteService.saveSite(site);
+        site = siteService.getSiteById(4);
+        physician.addSite(site);
+        site.addReportingPhysician(physician);
+        siteService.saveSite(site);
+        reportingPhysicianService.saveReportingPhysician(physician);
+
+
+
+
+
+
 
     }
 }

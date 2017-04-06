@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -15,6 +16,9 @@ public class ReportingPhysician {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Site> sites;
 
     @NotEmpty(message = "Last Name is required.")
     @Size(min = 2, message = "Last Name must be at least 2 characters.")
@@ -112,6 +116,20 @@ public class ReportingPhysician {
         this.homeDomain = homeDomain;
     }
 
+
+    public void addSite(Site site) {
+        if (!getSites().contains(site)) {
+            getSites().add(site);
+        }
+        if (!site.getReportingPhysician().contains(this)) {
+            site.getReportingPhysician().add(this);
+        }
+    }
+
+    public Collection<Site> getSites() {
+        return sites;
+    }
+
     @Override
     public String toString() {
         return "ReportingPhysician{" +
@@ -124,6 +142,7 @@ public class ReportingPhysician {
                 ", created=" + created +
                 ", lastSynchronized=" + lastSynchronized +
                 ", activeStatus=" + activeStatus +
+                ", number of mapped sites=" + this.getSites().size() +
                 '}';
     }
 }

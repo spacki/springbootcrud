@@ -14,7 +14,7 @@
             <!--<div class="container">-->
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">View Contact</div>
+                <div class="panel-heading">View Site</div>
                 <div class="panel-body">
                     <div class="form-group">
                         <label for="inputId">ID</label>
@@ -27,6 +27,10 @@
                     <div class="form-group">
                         <label for="inputCity">City</label>
                         <input type="text" class="form-control" id="inputCity" placeholder="City" th:field="*{site.city}" name="city" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputUserGroup">XER User Group</label>
+                        <input type="text" class="form-control" id="inputUserGroup" placeholder="userGroup" th:field="*{site.userGroup}" name="userGroup" disabled="disabled"/>
                     </div>
                     <div class="form-group">
                         <label for="inputPort">Web Service Port</label>
