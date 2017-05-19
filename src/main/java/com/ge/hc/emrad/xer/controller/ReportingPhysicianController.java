@@ -55,7 +55,7 @@ public class ReportingPhysicianController {
         this.greetingClient = greetingClient;
     }
 
-    @RequestMapping(value = { "", "/" })
+    @RequestMapping(value = {"", "/"})
     public String index(Model model) {
         log.info(" load all reporting physicians ..");
         model.addAttribute("activePage", "reports");
@@ -73,7 +73,7 @@ public class ReportingPhysicianController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addReportingPhysician(ReportingPhysician reportingPhysician, Model model) {
-        log.debug("add and get");;
+        log.debug("add and get");
         model.addAttribute("sites", this.siteService.getAllSites());
         model.addAttribute("activePage", "reports");
         return "reports/add";
@@ -82,10 +82,12 @@ public class ReportingPhysicianController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addSite(@Valid ReportingPhysician reportingPhysician, BindingResult bindingResult, Model model) {
         log.info("add (post) new reporting physician");
+        model.addAttribute("sites", this.siteService.getAllSites());
+        model.addAttribute("activePage", "reports");
         // first we needd to check if the user exists on the selected site
 
 
-        /* SOPA Pacs service simulator */
+        /* SOAP Pacs service simulator */
 
         /*
         GetGreetingResponse response = greetingClient.getGreeting("Karsten");
@@ -94,22 +96,31 @@ public class ReportingPhysicianController {
 
         if (bindingResult.hasErrors()) {
             log.debug("some errors ");
-            model.addAttribute("sites", this.siteService.getAllSites());
-            model.addAttribute("activePage", "reports");
+
             return "reports/add";
         }
         /* now we must make sure the user is know on the hoem trust */
 
-         RestTemplate restTemplate = new RestTemplate();
-         log.info("make sure that a user exists: " + reportingPhysician.getUserId());
+        RestTemplate restTemplate = new RestTemplate();
+        log.info("make sure that a user exists: " + reportingPhysician.getUserId() + " on site " + siteService.getStiteByName(reportingPhysician.getHomeDomain()));
 
-        String url = "http://localhost:9100/hello-cpacs/?name=" + reportingPhysician.getUserId();
-        CpacsUser user = restTemplate.getForObject(
-                url, CpacsUser.class);
-        log.info("user: " + user);
+        String url = "http://localhost:" + siteService.getStiteByName(reportingPhysician.getHomeDomain()).getWebservicePort() + "/hello-cpacs/?name=" + reportingPhysician.getUserId();
+        log.debug("URL: " + url);
+        CpacsUser user = null;
+        try {
+            user = restTemplate.getForObject(
+                    url, CpacsUser.class);
+            log.info("user: " + user);
+        } catch (Exception e) {
+            log.debug("Could not vaildate user againts Home trust please verify the web service is running at  " + url);
+            FieldError fieldError = new FieldError("reportingPhysician", "userId", "could not vaildate user " + reportingPhysician.getUserId() + "  againts Home trust. Please verify the web service is running at " + "http://localhost:" + siteService.getStiteByName(reportingPhysician.getHomeDomain()).getWebservicePort());
+            bindingResult.addError(fieldError);
+            return "reports/add";
+        }
 
-        if (user == null) {
-            FieldError fieldError = new FieldError("reportingPhysician", "userId", "the user does not exist on the local trust!, Please create the user on AD of the local trust!");
+       //if (user == null) {
+        if (user.getId()==0) {
+            FieldError fieldError = new FieldError("reportingPhysician", "userId", "the user "  + user.getUserName() + " does not exist on the local trust!, Please create the user on AD of the local trust!");
             bindingResult.addError(fieldError);
             return "reports/add";
         }

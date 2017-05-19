@@ -50,6 +50,10 @@
 			<artifactId>spring-ws-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -61,6 +65,34 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.12.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generateDirectory>src/main/java</generateDirectory>
+					<generatePackage>mypacs.wsdl</generatePackage>
+					<!--generatePackage>pacs.wsdl</generatePackage-->
+					<schemas>
+						<schema>
+							<!--url>http://localhost:8080/ws/greetings.wsdl</url-->
+							<!--url>file:///Users/karstenspakowski/apps/SpringbootTraining/SpringSOAPServiceConsume/SpringSOAPServiceConsume/src/main/resources/greetings.wsdl</url-->
+							<!--url>/Users/karstenspakowski/apps/SpringbootTraining/SpringSOAPServiceConsume/SpringSOAPServiceConsume/src/main/resources/pacs.wsdl</url-->
+							<url>/Users/karstenspakowski/apps/SpringbootTraining/SpringSOAPServiceConsume/SpringSOAPServiceConsume/src/main/resources/mypacs.wsdl</url>
+							<!--url>/Users/karstenspakowski/apps/SpringbootTraining/SpringSOAPServiceConsume/SpringSOAPServiceConsume/src/main/resources/PacsSecuritySvc.wsdl</url-->
+							<!--url>http://localhost:8080/axis/services/PacsSecuritySvc?wsdl</url-->
+						</schema>
+					</schemas>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

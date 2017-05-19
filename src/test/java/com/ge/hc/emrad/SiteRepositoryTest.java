@@ -4,6 +4,7 @@ import com.ge.hc.emrad.configuration.RepositoryTestConfiguration;
 import com.ge.hc.emrad.xer.configuration.RepositoryConfiguration;
 import com.ge.hc.emrad.xer.domain.Site;
 import com.ge.hc.emrad.xer.repository.SiteRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class SiteRepositoryTest {
 
 
     @Test
+    @Ignore
     public void testSaveProduct(){
         //setup product
         Site site = new Site();

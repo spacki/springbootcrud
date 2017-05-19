@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" ng-app="gr8conf2017">
+<head>
+    <meta charset="utf-8">
+    <title ng-bind="conferenceName"></title>
+    <meta name="description"
+          content="GR8conf Europe 2017, May 31 - June 2 in Copenhagen Denmark, Dedicated to the Groovy Ecosystem">
+    <meta name="apple-itunes-app"
+          content="app-id=1080928437, affiliate-data=myAffiliateData, app-argument=http://gr8conf.eu/#/">
+    <meta name="google-site-verification" content="k6D9TKnO_h9RkGEz7QlSCFOZ7clVmm0B46UTZX6S9QI">
+    <meta name="viewport" content="width=device-width">
+    <link rel="image_src" href="/images/eu/year-logo.b1bc7c61.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="styles/vendor.5f242056.css">
+    <link rel="stylesheet" href="styles/main.9cb5b34f.css">
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5DLwPPVAz88_k0yO2nmFe7T9k1urQs84"></script>
+</head> <!--[if lt IE 9>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<body class="animated fadeIn">
+<!--Add "parallax" class if you have elements on the page with parallax backgrounds. "fadeIn" class makes content fades in on loading-->
+<!--Body-->
+<div id="top"></div> <!--Off-Canvas-->
+<div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap"> <!--Off-Canvas Menu-->
+        <aside class="left-off-canvas-menu">
+            <div class="mobile-navi" ng-include="menuUrl"></div>
+        </aside> <!--Off-Canvas Menu Close--> <!--Layout-->
+        <div class="site-layout">
+            <!--If you add class "boxed" to .site-layout it wraps the whole document in a box, than you can simply add pattern background to body or leave it white. Please note in a "boxed" mode header doesn't stick to the top.-->
+            <!--Fullscreen Hero--> <!--Adding class "fullscreen" makes hero height equals window height-->
+            <section id="hero" class="hero-static fullscreen no-space-bottom {{eventImageCss}}" parallax-background
+                     parallax-ratio="-0.4">
+                <div class="sticky-btns"><span id="scrollContent-btn" scroll-to="page"><i
+                        class="fa fa-chevron-down"></i></span></div> <!--Event Info Block-->
+                <div class="overlay-block">
+                    <div class="opacity-70">
+                        <div ng-include="eventUrl"></div> <!--Slide Up Toggle-->
+                        <div id="slide-up-toggle"><i class="fa fa-angle-double-down"></i></div>
+                    </div>
+                    <div class="opacity-97 slide-up">
+                        <!--Adding Class 'slide-up' hiding content in mobile view and reveal (slide up) content on click-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9"> <!--Countdown-->
+                                    <div class="countdown light align-center">
+                                        <div class="timer" id="timer2" data-countdown-from="2017-05-31 8:30"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" ng-controller="MenuCtrl"><a ng-href="#/registration"
+                                                                                  class="btn btn-lg btn-primary btn-register"
+                                                                                  ng-click="scrollToTop()"> <span
+                                        class="text"><i class="fa fa-ticket"></i> Registration</span> </a> <br></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> <!--Fullscreen Hero Close--> <!--Header--> <!--Scroller header is for one page layouts where navigation links are anchors to the relevant section of the page.
+      Please note in a "boxed" mode header doesn't stick to the top.-->
+            <header id="header" class="header scroller">
+                <div class="inner">
+                    <div class="container group"> <!--Logo-->
+                        <div ng-include="logoUrl"></div> <!--Navigation Toggle-->
+                        <div class="left-off-canvas-toggle" id="nav-toggle"><span></span></div> <!--Site Navigation-->
+                        <div class="navigation navigation-right"> <!--Menu-->
+                            <nav class="menu scroll-menu">
+                                <!--Add ".scroll-menu" to the <nav> and ".scroll" to <a> to enable scrolling to anchor functionality-->
+                                <div ng-include="menuUrl"></div>
+                            </nav>
+                        </div> <!--Tools-->
+                        <div class="tools group user" ng-controller="LoginCtrl"><span class="ng-hide"
+                                                                                      ng-show="showLogin"> <a
+                                ng-click="login()" class="btn btn-primary">Login</a> </span> <span class="ng-hide"
+                                                                                                   ng-show="showLogout"
+                                                                                                   uib-tooltip="Logged in from your {{currentUser.provider}} account as {{currentUser.screenName}}"
+                                                                                                   uib-tooltip-placement="bottom"> <img
+                                class="profileImage img-circle" ng-src="{{currentUser.profileImageUrl}}"> <a
+                                ng-click="logout()" class="btn btn-primary">Logout</a> </span></div> <!--Tools Close-->
+                    </div>
+                </div> <!--Quick Search-->
+                <form class="quick-search" method="get" autocomplete="off">
+                    <div class="overlay"></div>
+                    <input class="search-field" type="text" placeholder="Search"> <span>Press enter to search</span>
+                </form>
+            </header> <!--Header Close--> <!--Page Content-->
+            <div id="page" class="page">
+                <div ng-view=""></div>
+            </div> <!--Page Content Close--> <!--Footer-->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row"> <!--Featured Posts--> <!--<div class="col-md-4 col-sm-4">-->
+                        <!--<div ng-include="blogUrl"></div>--> <!--</div>--> <!--Socials-->
+                        <div class="col-md-4 col-sm-4">
+                            <div ng-include="socialsUrl"></div>
+                        </div> <!--Contact Info-->
+                        <div class="col-md-offset-4 col-sm-offset-4 col-md-4 col-sm-4">
+                            <div ng-include="contactsUrl"></div>
+                        </div>
+                    </div>
+                </div> <!--Copyright-->
+                <div class="copyright">
+                    <div class="container"><p>GR8Conf - Dedicated to the Groovy Ecosystem</p></div>
+                </div>
+            </footer> <!--Footer Close--> </div> <!--Layout Close--> <!-- close the off-canvas menu --> <a
+                class="exit-off-canvas"></a></div>
+</div> <!--Off-Canvas Close--> <!--Sticky Buttons-->
+<div class="sticky-btns">
+    <form class="quick-contact" method="post" name="quick-contact"><h3>Contact us</h3>
+        <div class="form-group"><label for="qc-name">Full name</label> <input class="form-control" type="text"
+                                                                              name="qc-name" id="qc-name"
+                                                                              placeholder="Enter full name" required>
+        </div>
+        <div class="form-group"><label for="qc-email">Email</label> <input class="form-control" type="email"
+                                                                           name="qc-email" id="qc-email"
+                                                                           placeholder="Enter email" required></div>
+        <div class="form-group"><label for="qc-message">Your message</label> <textarea class="form-control"
+                                                                                       name="qc-message" id="qc-message"
+                                                                                       placeholder="Enter your message"
+                                                                                       required></textarea></div>
+        <input class="btn btn-primary btn-block" type="submit" value="Send"></form>
+    <!--<span id="qcf-btn"><i class="fa fa-envelope"></i></span>--> <span id="scrollTop-btn" scroll-to="top"><i
+        class="fa fa-chevron-up"></i></span></div> <!--Sticky Buttons Close-->
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5DLwPPVAz88_k0yO2nmFe7T9k1urQs84"></script>
+<!--[if lt IE 9]>
+<script src="scripts/oldieshim.cc7b624b.js"></script>
+<![endif]-->
+<script src="scripts/vendor.7e358f70.js"></script>
+<script src="scripts/config.e422f248.js"></script>
+<script src="scripts/scripts.956905f0.js"></script>
+<script src="scripts/kedavra_dist.745eb872.js"></script>
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script> (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'); </script>
+</html>

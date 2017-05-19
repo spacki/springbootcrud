@@ -25,6 +25,7 @@
                             <select class="form-control" th:field="*{siteId}" name="siteId" >
                                 <option th:each="site : ${sites}" th:value="${site.id}" th:text="${site.city}"></option>
                             </select>
+                            <span  class="error text-danger" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">Mapping Error</span>
                         </div>
 
 
