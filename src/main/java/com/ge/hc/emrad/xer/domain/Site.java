@@ -98,6 +98,7 @@ public class Site {
         if (!getReportingPhysician().contains(reportingPhysician)) {
             getReportingPhysician().add(reportingPhysician);
         }
+
         if (!reportingPhysician.getSites().contains(this)) {
             reportingPhysician.getSites().add(this);
         }

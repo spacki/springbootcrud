@@ -1,5 +1,6 @@
 package com.ge.hc.emrad.xer.configuration;
 
+import com.ge.hc.emrad.xer.client.ChangePasswordClient;
 import com.ge.hc.emrad.xer.client.CreateUserClient;
 import com.ge.hc.emrad.xer.client.UserInfoClient;
 import com.ge.hc.emrad.xer.client.VersionClient;
@@ -65,4 +66,14 @@ public class GreetingsConfiguration {
         createUserClient.setUnmarshaller(marshaller);
         return createUserClient;
     }
+
+    @Bean
+    public ChangePasswordClient changePasswordClient(Jaxb2Marshaller marshaller) {
+        ChangePasswordClient changePasswordClient = new ChangePasswordClient();
+        changePasswordClient.setDefaultUri("http://3.183.149.211/axis/services/PacsSecuritySvc");
+        changePasswordClient.setMarshaller(marshaller);
+        changePasswordClient.setUnmarshaller(marshaller);
+        return changePasswordClient;
+    }
+
 }

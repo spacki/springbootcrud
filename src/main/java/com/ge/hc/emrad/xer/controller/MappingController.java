@@ -85,6 +85,8 @@ public class MappingController {
         ReportingPhysician physician = reportingPhysicianService.getReportingPhysicianById(id);
         model.addAttribute("physician", physician);
         Collection<Site> sites = physician.getSites();
+        //please remover the local site from thye suer
+
         model.addAttribute("sites", sites);
         return "mappings/index";
     }
@@ -136,9 +138,10 @@ public class MappingController {
         Site site = siteService.getSiteById(mapping.getSiteId());
         Site homeSite = siteService.getStiteByName(physician.getHomeDomain());
         Collection<Site> mappedSites = physician.getSites();
-        mappedSites.add(homeSite);
+        //mappedSites.add(homeSite);
         List<Site> sites = siteService.findAllSites();
-        sites.removeAll(mappedSites);
+        //sites.removeAll(mappedSites);
+        sites.remove(homeSite);
         model.addAttribute("physician", physician);
         model.addAttribute("sites", sites);
         model.addAttribute("mapping", mapping);
@@ -146,7 +149,7 @@ public class MappingController {
 
         // the user should not exist on the remote site
 
-        log.debug("does the user already exist on " + site.getName());
+        log.debug("does the user already exist on " + site.getName() + " ?");
 
         try {
 
@@ -165,14 +168,14 @@ public class MappingController {
 
         // now since the user does not exist on the Remote trust it needs to be created for tets i just call the version method of the Pacs SecurityWebService
         // we need the ip of the site
-        log.debug(site.getImsAddress());
+        log.debug("create user whit PacsSecurityService request  on ims with ip address: " + site.getImsAddress());
 
         //GetVersionResponse response = versionClient.getVersion("GE C-PACS", site.getImsAddress());
         //versionClient.logResonse(response);
 
         CreateImsUserResponse response = createUserClient.createUser(physician.getUserId(), physician.getLastName(), site.getUserGroup(), site.getImsAddress());
 
-        // check agin if the user exist
+        // check,if the user is succesfully created by PAcs securiety Service
 
         try {
 

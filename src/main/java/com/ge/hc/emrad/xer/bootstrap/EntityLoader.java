@@ -10,6 +10,7 @@ import com.ge.hc.emrad.xer.service.SynchronisationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +23,7 @@ import java.util.List;
  * Created by karstenspakowski on 21/03/17.
  */
 @Component
+@Profile("dev")
 public class EntityLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private Logger log = Logger.getLogger(EntityLoader.class);
