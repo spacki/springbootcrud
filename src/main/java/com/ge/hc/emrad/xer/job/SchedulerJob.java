@@ -1,6 +1,7 @@
 package com.ge.hc.emrad.xer.job;
 
 import com.ge.hc.emrad.xer.client.ChangePasswordClient;
+import com.ge.hc.emrad.xer.domain.CpacsUser;
 import com.ge.hc.emrad.xer.domain.Mapping;
 import com.ge.hc.emrad.xer.domain.ReportingPhysician;
 import com.ge.hc.emrad.xer.domain.Site;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -58,6 +60,9 @@ public class SchedulerJob {
         this.mappingService = mappingService;
     }
 
+
+
+
     @Scheduled(fixedRateString = "${xer.password.sync.pollTime}")
     public void syncPassword() {
         logger.info("Password synchronisation is running");
@@ -82,10 +87,25 @@ public class SchedulerJob {
                         logger.warn (" call pacs security soap service " + physician.getUserId() + " : " + remotePassword + " : " +  localPassword + " : " + s.getImsAddress() );
                         ChangePasswordResponse response = changePasswordClient.changePassword(physician.getUserId(), remotePassword, localPassword, s.getImsAddress());
                     }
+                    // check lastname
+                    logger.debug("sync userName for " +  physician.getLastName() + " " + physician.getFirstName());
+                    String url = "http://localhost:" + s.getWebservicePort() + "/hello-cpacs/update";
+                    logger.debug("call restful web service at: " + url);
+                    RestTemplate restTemplate = new RestTemplate();
+                    CpacsUser newUser = new CpacsUser();
+                    newUser.setLastName(physician.getLastName() + " " + physician.getFirstName());
+                    newUser.setUserName(physician.getUserId());
+                    CpacsUser user = restTemplate.postForObject(url,newUser,CpacsUser.class);
+                    logger.info("user: " + user);
                 }
 
             }
         }
+
+    }
+
+
+    public void syncUserName() {
 
     }
 

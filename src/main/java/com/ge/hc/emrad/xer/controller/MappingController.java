@@ -170,10 +170,9 @@ public class MappingController {
         // we need the ip of the site
         log.debug("create user whit PacsSecurityService request  on ims with ip address: " + site.getImsAddress());
 
-        //GetVersionResponse response = versionClient.getVersion("GE C-PACS", site.getImsAddress());
-        //versionClient.logResonse(response);
 
-        CreateImsUserResponse response = createUserClient.createUser(physician.getUserId(), physician.getLastName(), site.getUserGroup(), site.getImsAddress());
+
+        CreateImsUserResponse response = createUserClient.createUser(physician.getUserId(), physician.getLastName() + " " + physician.getFirstName(), site.getUserGroup(), site.getImsAddress());
 
         // check,if the user is succesfully created by PAcs securiety Service
 
@@ -196,35 +195,6 @@ public class MappingController {
             return "mappings/add";
         }
 
-        //caheck again
-
-        /*
-        if (user == null) {
-            // call PacsSecuritywebService
-            String pacsUrl = "cpacs" + site.getImsAddress();
-            //check if the SOPA-call created the user
-            // otherwise redirect to the mapping page and state an error message
-        }
-        // now sync password
-
-        String remotePassword = "remote_password"; //   user.getDecryptPassword();
-        // now we need the password from the local domain
-        url = "http://localhost:" + siteService.getStiteByName(physician.getHomeDomain()).getWebservicePort() + "/hello-cpacs/?name=" + physician.getUserId();
-        CpacsUser localCpacsUser = null;
-        String localPassword = "something"; //localCpacsUser.getDecryptPassword();
-        if (localPassword.compareTo(remotePassword)== 0) {
-            log.debug("no password sync neccesary");
-        } else {
-            log.debug("call change password");
-            // now we need to call it once again, to see if axis service did waht we expected
-        }
-        physician.addSite(site);
-        site.addReportingPhysician(physician);
-        siteService.saveSite(site);
-        reportingPhysicianService.saveReportingPhysician(physician);
-        model.addAttribute("activePage", "mappings");
-        model.addAttribute("physician", physician);
-     */
         return "redirect:/mappings/view/" + mapping.getUserId();
     }
 }

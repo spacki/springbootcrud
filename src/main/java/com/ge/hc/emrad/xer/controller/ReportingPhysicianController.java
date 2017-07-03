@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -154,6 +155,23 @@ public class ReportingPhysicianController {
            delete users only if they have no mapping, mapping must be disabeled
          */
         log.warn("delete user " + reportingPhysicianService.getReportingPhysicianById(id));
+        ReportingPhysician physician = reportingPhysicianService.getReportingPhysicianById(id);
+        // we need all mappings
+        log.warn("we need to disable all mappings for physicain: " + physician);
+        Collection<Site> remoteSites = physician.getSites();
+        for (Site s : remoteSites) {
+            log.warn("remove maopping " + s);
+            String url = "http://localhost:" + s.getWebservicePort() + "/hello-cpacs/active";
+            log.debug("call restful web service at: " + url);
+            RestTemplate restTemplate = new RestTemplate();
+            CpacsUser newUser = new CpacsUser();
+            newUser.setActive(1);
+            newUser.setUserName(physician.getUserId());
+            CpacsUser user = restTemplate.postForObject(url,newUser,CpacsUser.class);
+            log.debug(user);
+
+        }
+        //please dactivate all remote users with the same id
         this.reportingPhysicianService.deleteReportingPhysician(id);
         return "redirect:/reports";
     }

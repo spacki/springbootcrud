@@ -21,7 +21,7 @@
                         <input type="hidden" th:field="${mapping.userId}" />
 
                         <div class="form-group">
-                            <label>Home Trust</label>
+                            <label>Remote Trusts</label>
                             <select class="form-control" th:field="*{siteId}" name="siteId" >
                                 <option th:each="site : ${sites}" th:value="${site.id}" th:text="${site.city}"></option>
                             </select>
