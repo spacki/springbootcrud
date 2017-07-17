@@ -85,7 +85,12 @@ public class SchedulerJob {
                     } else {
                         logger.info("password for user " + physician.getUserId() +  " LocalTrust: " + site.getName() + " RemoteTrust; " + s.getName() + " must synchronised" );
                         logger.warn (" call pacs security soap service " + physician.getUserId() + " : " + remotePassword + " : " +  localPassword + " : " + s.getImsAddress() );
-                        ChangePasswordResponse response = changePasswordClient.changePassword(physician.getUserId(), remotePassword, localPassword, s.getImsAddress());
+                        try {
+                            ChangePasswordResponse response = changePasswordClient.changePassword(physician.getUserId(), remotePassword, localPassword, s.getImsAddress());
+                        } catch (Exception e) {
+                            logger.warn("Pacs Security Service throws an error");
+
+                        }
                     }
                     // check lastname
                     logger.debug("sync userName for " +  physician.getLastName() + " " + physician.getFirstName());
